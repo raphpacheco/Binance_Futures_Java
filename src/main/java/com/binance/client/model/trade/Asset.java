@@ -22,6 +22,8 @@ public class Asset {
     private BigDecimal positionInitialMargin;
 
     private BigDecimal unrealizedProfit;
+    
+    private BigDecimal walletBalance;
 
     public String getAsset() {
         return asset;
@@ -86,6 +88,14 @@ public class Asset {
     public void setUnrealizedProfit(BigDecimal unrealizedProfit) {
         this.unrealizedProfit = unrealizedProfit;
     }
+    
+	public BigDecimal getWalletBalance() {
+		return walletBalance;
+	}
+
+	public void setWalletBalance(BigDecimal walletBalance) {
+		this.walletBalance = walletBalance;
+	}
 
     @Override
     public String toString() {

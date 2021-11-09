@@ -992,6 +992,7 @@ class RestApiRequestImpl {
                 element.setOpenOrderInitialMargin(item.getBigDecimal("openOrderInitialMargin"));
                 element.setPositionInitialMargin(item.getBigDecimal("positionInitialMargin"));
                 element.setUnrealizedProfit(item.getBigDecimal("unrealizedProfit"));
+                element.setWalletBalance(item.getBigDecimal("walletBalance"));
                 assetList.add(element);
             });
             result.setAssets(assetList);
