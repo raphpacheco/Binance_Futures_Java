@@ -10,12 +10,12 @@ public class LiquidationOrder {
     private String symbol;
 
     private BigDecimal price;
+    
+    private BigDecimal avgPrice;
 
     private BigDecimal origQty;
 
     private BigDecimal executedQty;
-
-    private BigDecimal averagePrice;
 
     private String timeInForce;
 
@@ -57,14 +57,6 @@ public class LiquidationOrder {
         this.executedQty = executedQty;
     }
 
-    public BigDecimal getAveragePrice() {
-        return averagePrice;
-    }
-
-    public void setAveragePrice(BigDecimal averagePrice) {
-        this.averagePrice = averagePrice;
-    }
-
     public String getTimeInForce() {
         return timeInForce;
     }
@@ -96,12 +88,20 @@ public class LiquidationOrder {
     public void setTime(Long time) {
         this.time = time;
     }
+    
+	public BigDecimal getAvgPrice() {
+		return avgPrice;
+	}
+
+	public void setAvgPrice(BigDecimal avgPrice) {
+		this.avgPrice = avgPrice;
+	}
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE).append("symbol", symbol)
                 .append("price", price).append("origQty", origQty).append("executedQty", executedQty)
-                .append("averagePrice", averagePrice).append("timeInForce", timeInForce).append("type", type)
+                .append("timeInForce", timeInForce).append("type", type)
                 .append("side", side).append("time", time).toString();
     }
 }
