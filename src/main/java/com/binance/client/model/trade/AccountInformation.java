@@ -1,6 +1,8 @@
 package com.binance.client.model.trade;
 
 import com.binance.client.constant.BinanceApiConstants;
+import com.binance.client.exception.BinanceApiException;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
@@ -160,6 +162,26 @@ public class AccountInformation {
         this.positions = positions;
     }
 
+	public BigDecimal getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(BigDecimal availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+	
+    public Asset getAsset(String asset) {
+	    return assets.stream().filter(ass -> ass.getAsset().equals(asset))
+	        .findFirst()
+	        .orElseThrow(() -> new BinanceApiException(BinanceApiException.KEY_MISSING, "Unable to obtain information for asset " + asset));
+     }
+    
+    public Position getPosition(String symbol) {
+	    return positions.stream().filter(p -> p.getSymbol().equals(symbol))
+	        .findFirst()
+	        .orElseThrow(() -> new BinanceApiException(BinanceApiException.KEY_MISSING, "Unable to obtain information for symbol " + symbol));
+     }
+    
     @Override
     public String toString() {
         return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE).append("canDeposit", canDeposit)
@@ -171,12 +193,4 @@ public class AccountInformation {
                 .append("totalUnrealizedProfit", totalUnrealizedProfit).append("totalWalletBalance", totalWalletBalance)
                 .append("updateTime", updateTime).append("assets", assets).append("positions", positions).toString();
     }
-
-	public BigDecimal getAvailableBalance() {
-		return availableBalance;
-	}
-
-	public void setAvailableBalance(BigDecimal availableBalance) {
-		this.availableBalance = availableBalance;
-	}
 }

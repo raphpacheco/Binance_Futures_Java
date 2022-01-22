@@ -28,6 +28,8 @@ public class Position {
     private String maxNotional;
 
     private String positionSide;
+    
+    private String positionAmt;
 
     public Boolean getIsolated() {
         return isolated;
@@ -116,6 +118,14 @@ public class Position {
     public void setPositionSide(String positionSide) {
         this.positionSide = positionSide;
     }
+    
+	public String getPositionAmt() {
+		return positionAmt;
+	}
+
+	public void setPositionAmt(String positionAmt) {
+		this.positionAmt = positionAmt;
+	}
 
     @Override
     public String toString() {
@@ -127,4 +137,5 @@ public class Position {
                 .append("maxNotional", maxNotional).append("positionSide", positionSide)
                 .append("isolated", isolated).toString();
     }
+
 }

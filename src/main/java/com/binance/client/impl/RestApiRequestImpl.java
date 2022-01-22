@@ -1048,6 +1048,7 @@ class RestApiRequestImpl {
                 element.setEntryPrice(item.getString("entryPrice"));
                 element.setMaxNotional(item.getString("maxNotional"));
                 element.setPositionSide(item.getString("positionSide"));
+                element.setPositionAmt(item.getString("positionAmt"));
                 positionList.add(element);
             });
             result.setPositions(positionList);
