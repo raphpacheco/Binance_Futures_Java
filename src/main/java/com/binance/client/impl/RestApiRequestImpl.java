@@ -1029,6 +1029,7 @@ class RestApiRequestImpl {
                 element.setPositionInitialMargin(item.getBigDecimal("positionInitialMargin"));
                 element.setUnrealizedProfit(item.getBigDecimal("unrealizedProfit"));
                 element.setWalletBalance(item.getBigDecimal("walletBalance"));
+                element.setAvailableBalance(item.getBigDecimal("availableBalance"));
                 assetList.add(element);
             });
             result.setAssets(assetList);

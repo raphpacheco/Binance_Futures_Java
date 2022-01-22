@@ -1,9 +1,10 @@
 package com.binance.client.model.trade;
 
-import com.binance.client.constant.BinanceApiConstants;
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.math.BigDecimal;
+import com.binance.client.constant.BinanceApiConstants;
 
 public class Asset {
 
@@ -24,6 +25,8 @@ public class Asset {
     private BigDecimal unrealizedProfit;
     
     private BigDecimal walletBalance;
+    
+    private BigDecimal availableBalance;
 
     public String getAsset() {
         return asset;
@@ -106,4 +109,12 @@ public class Asset {
                 .append("positionInitialMargin", positionInitialMargin).append("unrealizedProfit", unrealizedProfit)
                 .toString();
     }
+
+	public BigDecimal getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(BigDecimal availableBalance) {
+		this.availableBalance = availableBalance;
+	}
 }
