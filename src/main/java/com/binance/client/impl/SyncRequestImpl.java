@@ -129,6 +129,10 @@ public class SyncRequestImpl implements SyncRequestClient {
         return RestApiInvoker.callSync(requestImpl.getPositionMarginHistory(symbolName, type, startTime, endTime, limit));
     }
 
+    @Override
+    public LeverageBracket getLeverageBracket(String symbolName) {
+        return RestApiInvoker.callSync(requestImpl.getLeverageBracket(symbolName));
+    }
 
     @Override
     public JSONObject getPositionSide() {

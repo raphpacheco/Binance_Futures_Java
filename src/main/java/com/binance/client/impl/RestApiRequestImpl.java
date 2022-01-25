@@ -44,8 +44,10 @@ import com.binance.client.model.market.Trade;
 import com.binance.client.model.trade.AccountBalance;
 import com.binance.client.model.trade.AccountInformation;
 import com.binance.client.model.trade.Asset;
+import com.binance.client.model.trade.Bracket;
 import com.binance.client.model.trade.Income;
 import com.binance.client.model.trade.Leverage;
+import com.binance.client.model.trade.LeverageBracket;
 import com.binance.client.model.trade.MyTrade;
 import com.binance.client.model.trade.Order;
 import com.binance.client.model.trade.Position;
@@ -771,6 +773,42 @@ class RestApiRequestImpl {
             JSONObject result = new JSONObject();
             result.put("dualSidePosition", jsonWrapper.getBoolean("dualSidePosition"));
             return result;
+        });
+        return request;
+    }
+    
+    RestApiRequest<LeverageBracket> getLeverageBracket(String symbol) {
+        RestApiRequest<LeverageBracket> request = new RestApiRequest<>();
+        UrlParamsBuilder builder = UrlParamsBuilder.build()
+        		.putToUrl("symbol", symbol);
+        request.request = createRequestByGetWithSignature("/fapi/v1/leverageBracket", builder);
+
+        request.jsonParser = (jsonWrapper -> {
+            JSONObject jsonObject = jsonWrapper.getJson();
+            
+        	LeverageBracket lb = new LeverageBracket();        		
+            List<Bracket> brackets = new ArrayList<Bracket>();
+            
+            JSONArray jsonArray = (JSONArray) jsonObject.get("data");
+	           jsonArray.forEach(obj -> {
+	        	   JSONObject jsonObj = (JSONObject) obj;
+	        	   	lb.setSymbol(jsonObj.getString("symbol"));
+	        	   	
+	        	   	jsonObj.getJSONArray("brackets").forEach((item) -> {
+	                	Bracket bracket = new Bracket();
+	                		bracket.setBracket(((JSONObject)item).getBigDecimal("bracket"));
+	                		bracket.setInitialLeverage(((JSONObject)item).getBigDecimal("initialLeverage"));
+	                		bracket.setNotionalCap(((JSONObject)item).getBigDecimal("notionalCap"));
+	                		bracket.setNotionalFloor(((JSONObject)item).getBigDecimal("notionalFloor"));
+	                		bracket.setMaintMarginRatio(((JSONObject)item).getBigDecimal("maintMarginRatio"));
+	                		bracket.setCum(((JSONObject)item).getBigDecimal("cum"));
+	                    brackets.add(bracket);
+	                });
+	        	});
+	           
+	           lb.setBrackets(brackets);
+            	            
+            return lb;
         });
         return request;
     }

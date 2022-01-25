@@ -1,13 +1,42 @@
 package com.binance.client;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
 import com.binance.client.impl.BinanceApiInternalFactory;
 import com.binance.client.model.ResponseResult;
-import com.binance.client.model.market.*;
-import com.binance.client.model.enums.*;
-import com.binance.client.model.trade.*;
-
-import java.util.List;
+import com.binance.client.model.enums.CandlestickInterval;
+import com.binance.client.model.enums.IncomeType;
+import com.binance.client.model.enums.NewOrderRespType;
+import com.binance.client.model.enums.OrderSide;
+import com.binance.client.model.enums.OrderType;
+import com.binance.client.model.enums.PeriodType;
+import com.binance.client.model.enums.PositionSide;
+import com.binance.client.model.enums.TimeInForce;
+import com.binance.client.model.enums.WorkingType;
+import com.binance.client.model.market.AggregateTrade;
+import com.binance.client.model.market.Candlestick;
+import com.binance.client.model.market.CommonLongShortRatio;
+import com.binance.client.model.market.ExchangeInformation;
+import com.binance.client.model.market.FundingRate;
+import com.binance.client.model.market.LiquidationOrder;
+import com.binance.client.model.market.MarkPrice;
+import com.binance.client.model.market.OpenInterestStat;
+import com.binance.client.model.market.OrderBook;
+import com.binance.client.model.market.PriceChangeTicker;
+import com.binance.client.model.market.SymbolOrderBook;
+import com.binance.client.model.market.SymbolPrice;
+import com.binance.client.model.market.TakerLongShortStat;
+import com.binance.client.model.market.Trade;
+import com.binance.client.model.trade.AccountBalance;
+import com.binance.client.model.trade.AccountInformation;
+import com.binance.client.model.trade.Income;
+import com.binance.client.model.trade.Leverage;
+import com.binance.client.model.trade.LeverageBracket;
+import com.binance.client.model.trade.MyTrade;
+import com.binance.client.model.trade.Order;
+import com.binance.client.model.trade.PositionRisk;
+import com.binance.client.model.trade.WalletDeltaLog;
 
 /**
  * Synchronous request interface, invoking Binance RestAPI via synchronous
@@ -218,6 +247,8 @@ public interface SyncRequestClient {
      * @return ResponseResult.
      */
     JSONObject getPositionSide();
+
+    LeverageBracket getLeverageBracket(String symbol);
 
     /**
      * Check an order's status.
