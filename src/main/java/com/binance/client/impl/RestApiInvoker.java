@@ -16,7 +16,7 @@ abstract class RestApiInvoker {
     private static final Logger log = LoggerFactory.getLogger(RestApiInvoker.class);
     private static final OkHttpClient client = new OkHttpClient();
 
-    static void checkResponse(JsonWrapper json) {
+    static void checkResponse(JsonWrapper json, Response response) {
         try {
             if (json.containKey("success")) {
                 boolean success = json.getBoolean("success");
@@ -34,9 +34,16 @@ abstract class RestApiInvoker {
 
                 int code = json.getInteger("code");
                 if (code != 200) {
-                    String message = json.getStringOrDefault("msg", "");
-                    throw new BinanceApiException(BinanceApiException.EXEC_ERROR,
-                            "[Executing] " + code + ": " + message);
+        			if(response.code() == 418 || response.code() == 429) {
+                        String message = "Retry-After:"+response.header("Retry-After");
+                        throw new BinanceApiException(BinanceApiException.RATE_LIMIT_ERROR,
+                                "[Executing] " + code + ": " + message);
+        				
+        			}else {
+                        String message = json.getStringOrDefault("msg", "");
+                        throw new BinanceApiException(BinanceApiException.EXEC_ERROR,
+                                "[Executing] " + code + ": " + message);
+        			}
                 }
             }
         } catch (BinanceApiException e) {
@@ -61,8 +68,10 @@ abstract class RestApiInvoker {
                         "[Invoking] Cannot get the response from server");
             }
             log.debug("Response =====> " + str);
+            
             JsonWrapper jsonWrapper = JsonWrapper.parseFromString(str);
-            checkResponse(jsonWrapper);
+            
+            checkResponse(jsonWrapper, response);
             return request.jsonParser.parseJson(jsonWrapper);
         } catch (BinanceApiException e) {
             throw e;

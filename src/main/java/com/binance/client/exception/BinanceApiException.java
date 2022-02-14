@@ -13,6 +13,8 @@ public class BinanceApiException extends RuntimeException {
     public static final String SUBSCRIPTION_ERROR = "SubscriptionError";
     public static final String ENV_ERROR = "EnvironmentError";
     public static final String EXEC_ERROR = "ExecuteError";
+    public static final String RATE_LIMIT_ERROR = "rateLimitError";
+
     private final String errCode;
 
     public BinanceApiException(String errType, String errMsg) {
